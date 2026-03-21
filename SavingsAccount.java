@@ -13,7 +13,7 @@ public class SavingsAccount extends CheckingAccount {
   } // end setInterestRate
 
   public double getInterestRate(){
-    return this.interestRate
+    return this.interestRate;
   } // end getInterestRate
 
   public void calcInterest(){

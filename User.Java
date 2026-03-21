@@ -1,65 +1,55 @@
 import java.util.*;
 import java.io.*;
 
-public abstract class User implements Serializeable, HasMenu {
-  String userName = "";
-  String PIN = "";
+public abstract class User implements Serializable, HasMenu {
+    private String userName = "";
+    private String PIN = "";
 
-  public void SetUser(String userName){
-    this.userName = userName;
-  } // end SetUser
+    public void setUserName(String userName) {
+        this.userName = userName;
+    } // end setUserName
 
-  public String getUserName(){
-    return this.userName;
-  } // end getUser
+    public String getUserName() {
+        return this.userName;
+    } // end getUserName
 
-  public void setPIN(String PIN){
-    if (PIN.matches("^\\d{4}$")){
-        this.PIN = PIN;
-    } else {
-      System.out.prinln("PIN must be 4 numeric digits..")
-      System.out.prinln("Setting PIN to 0000")
-      this.PIN = "0000";
-    } // end if
-    }
-    this.PIN = PIN;
-  } // end setPIN
+    public void setPIN(String PIN) {
+        if (PIN.matches("^\\d{4}$")) {
+            this.PIN = PIN;
+        } else {
+            System.out.println("PIN must be 4 numeric digits.");
+            System.out.println("Setting PIN to 0000");
+            this.PIN = "0000";
+        }
+    } // end setPIN
 
-  public String getPIN(){
-    return this.PIN;
-  } // end getPIN
+    public String getPIN() {
+        return this.PIN;
+    } // end getPIN
 
-  public boolean login(String userName, String pinIn){
-    boolean result = false;
-    if (userNameIn. equals(this.userName)){
-      if (pinIn.equals(this.PIN)){
-        result = true;
-      } // end pin if
-    } // end user if
-    return result;
-  } // end login
+    public boolean login(String userNameIn, String pinIn) {
+        return userNameIn.equals(this.userName) && pinIn.equals(this.PIN);
+    } // end login
 
-  public boolean login(){
-    Scanner input = new Scanner(System.in);
-    boolean result = false;
-    System.out.print("User name: ");
-    String userNameIn = input.nextLine();
-    if (userNameIn.equals(this.userName)){
-      System.out.print("PIN: ");
-      String pinIn = input.nextLine();
+    public boolean login() {
+        Scanner input = new Scanner(System.in);
 
-      if (pinIn.equals(this.pin)){
-        System.out.println("login successful");
-        result = true;
-      } else {
-        System.out.println("Incorrect PIN");
-    } else {
-      System.out.println("Incorrect User Name");
-    } // end if
-    return result;
-    } // end login 
+        System.out.print("User name: ");
+        String userNameIn = input.nextLine();
+
+        System.out.print("PIN: ");
+        String pinIn = input.nextLine();
+
+        boolean result = login(userNameIn, pinIn);
+
+        if (result) {
+            System.out.println("Login successful");
+        } else {
+            System.out.println("Login failed");
+        }
+
+        return result;
+    } // end login
 
     public abstract String getReport();
-
-  } // end class def
-}
+} // end class
