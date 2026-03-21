@@ -3,56 +3,65 @@
 # UML
 
 
-## HasMenu (interface)
-- menu(): String
-- start(): void
+```mermaid
+classDiagram
 
-## CheckingAccount
-- balance: double
-- CheckingAccount()
-- CheckingAccount(balance: double)
-- main(): void
-- menu(): String
-- start(): void
-- getBalance(): double
-- getBalanceString(): String
-- setBalance(balance: double): void
-- checkBalance(): void
-- getDouble(): double
-- makeDeposit(): void
-- makeWithdrawal(): void
+class HasMenu {
+  <<interface>>
+  +menu() String
+  +start() void
+}
 
-## SavingsAccount
-- interestRate: double
-- main(): void
-- calcInterest(): void
-- setInterestRate(rate: double): void
-- getInterestRate(): double
+class CheckingAccount {
+  -double balance
+  +CheckingAccount()
+  +CheckingAccount(double balance)
+  +main() void
+  +menu() String
+  +start() void
+  +getBalance() double
+  +getBalanceString() String
+  +setBalance(double balance) void
+  +checkBalance() void
+  -getDouble() double
+  +makeDeposit() void
+  +makeWithdrawal() void
+}
 
-## User (abstract)
-- userName: String
-- PIN: String
-- login(): boolean
-- login(userName: String, PIN: String): boolean
-- setUserName(userName: String): void
-- getUserName(): String
-- setPIN(PIN: String): void
-- getPIN(): String
-- getReport(): String
+class SavingsAccount {
+  -double interestRate
+  +main() void
+  +calcInterest() void
+  +setInterestRate(double rate) void
+  +getInterestRate() double
+}
 
-## Customer
-- checking: CheckingAccount
-- savings: SavingsAccount
-- main(): void
-- Customer()
-- Customer(userName: String, PIN: String)
-- start(): void
-- menu(): String
-- changePIN(): void
-- getReport(): String
+class User {
+  <<abstract>>
+  -String userName
+  -String PIN
+  +login() boolean
+  +login(String userName, String PIN) boolean
+  +setUserName(String userName) void
+  +getUserName() String
+  +setPIN(String PIN) void
+  +getPIN() String
+  +getReport() String
+}
 
-## Relationships
-- CheckingAccount implements HasMenu
-- SavingsAccount extends CheckingAccount
-- User implements HasMenu
-- Customer extends User
+class Customer {
+  -CheckingAccount checking
+  -SavingsAccount savings
+  +main() void
+  +Customer()
+  +Customer(String userName, String PIN)
+  +start() void
+  +menu() String
+  +changePIN() void
+  +getReport() String
+}
+
+CheckingAccount ..|> HasMenu
+User ..|> HasMenu
+SavingsAccount --|> CheckingAccount
+Customer --|> User
