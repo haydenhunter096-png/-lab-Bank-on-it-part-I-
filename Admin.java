@@ -5,7 +5,7 @@ public class Admin extends User implements HasMenu, Serializable {
 
     public static void main(String[] args){
         Admin a = new Admin();
-        a.login()
+        a.login();
     } // emd main
 
     Public Admin(){

@@ -7,7 +7,7 @@ public class Bank implements HasMenu {
     CustomerList customers = new CustomerList();
 
     public static void main(String[] args){
-        new Bank()
+        new Bank();
     } // end main
 
     public Bank(){
@@ -47,7 +47,7 @@ public class Bank implements HasMenu {
               System.out.println("Customer login"); 
               this.LoginAsCustomer(); 
             } else{
-              System.out.println("Please eneter 0, 1, or 2")  
+              System.out.println("Please eneter 0, 1, or 2");  
             } // end if 
         } // end while
 
@@ -90,7 +90,7 @@ public class Bank implements HasMenu {
       System.out.print("User name: ");
       String userName = input.nextLine();
       System.out.print("PIN: ");
-      String PIN = input.nextLine():
+      String PIN = input.nextLine();
       customers.add(new Customer(userName, PIN));
     } // end addUser
 
