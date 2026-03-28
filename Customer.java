@@ -1,5 +1,7 @@
+import java.util.Scanner;
+import java.io.Serializable;
 
-class User implements Serializable {
+class LegacyUser implements Serializable {
     protected String userName;
     protected String PIN;
     private transient Scanner input = new Scanner(System.in);
@@ -30,7 +32,7 @@ class User implements Serializable {
 }
 
 
-class CheckingAccount {
+class LegacyCheckingAccount {
     private double balance = 0.0;
     private Scanner input = new Scanner(System.in);
 
@@ -76,7 +78,7 @@ class CheckingAccount {
 }
 
 
-class SavingsAccount {
+class LegacySavingsAccount {
     private double balance = 5000.0;
     private Scanner input = new Scanner(System.in);
 
