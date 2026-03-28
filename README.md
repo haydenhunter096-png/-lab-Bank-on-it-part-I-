@@ -3,7 +3,6 @@
 # UML
 
 
-```mermaid
 classDiagram
 
 class HasMenu {
@@ -31,7 +30,7 @@ class CheckingAccount {
 class SavingsAccount {
   -double interestRate
   +main() void
-  +calcInterest() void
+  +calcInterest() double
   +setInterestRate(double rate) void
   +getInterestRate() double
 }
@@ -52,7 +51,6 @@ class User {
 class Customer {
   -CheckingAccount checking
   -SavingsAccount savings
-  +main() void
   +Customer()
   +Customer(String userName, String PIN)
   +start() void
@@ -61,7 +59,37 @@ class Customer {
   +getReport() String
 }
 
+class Admin {
+  +Admin()
+  +menu() void
+  +start() void
+  +getReport() String
+}
+
+class CustomerList {
+}
+
+class Bank {
+  -Admin admin
+  -CustomerList customers
+  +Bank()
+  +menu() void
+  +start() void
+  -startAdmin() void
+  -loginCustomer() void
+  -fullCustomerReport() void
+  -addUser() void
+  -applyInterest() void
+  -saveCustomers() void
+  -loadCustomers() void
+  -loadSampleCustomers() void
+}
+
 CheckingAccount ..|> HasMenu
 User ..|> HasMenu
 SavingsAccount --|> CheckingAccount
 Customer --|> User
+Admin --|> User
+CustomerList --|> ArrayList
+Bank --> Admin
+Bank --> CustomerList
