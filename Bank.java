@@ -12,7 +12,10 @@ public class Bank implements HasMenu {
 
     public Bank(){
         this.loadSampleCustomers();
+        this.saveCustomers();
+        this.loadCustomers();
         this.start();
+        this.saveCustomers();
     } // end constructor
 
     public String menu(){
@@ -118,6 +121,32 @@ public class Bank implements HasMenu {
       currentCustomer.start();  
     } // end if
   }  // end loginAsCustomer
+
+  public void saveCustomers(){
+    try {
+      FileOutputStream fo = new FileOutputStream("Customers.dat");
+      ObjectOutputStream abOut = new ObjectOutputStream(fo);
+      abOut.writeObject(customers);
+      abOut.close();
+      fo.close();
+    } catch (Exception e){
+      System.out.println(e.getMessage());
+    } // end try
+  } // end saveCustomers
+
+
+  public void loadCustomers(){
+    try {
+      FileOutputStream fi = new FileInputStream("Customers.dat");
+      ObjectInputStream obIn = new ObjectInputStream(fi);
+      customers = (CustomersList)obIn.readObject();
+      obIn.close();
+      fi.close();
+    } catch (Exception e){
+      System.out.println(e.getMessage());
+    } // end try
+  } // end loadCustomers
+
 } // end Bank
 
 class CustomerList extends ArrayList<Customer> {};
