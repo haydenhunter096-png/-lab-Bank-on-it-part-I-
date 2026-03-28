@@ -96,7 +96,7 @@ public class Bank implements HasMenu {
 
     public void applyInterest(){
       for (Customer customer: customers){
-        customer.savings.calcInterest();
+        customer.getSavings().calcInterest();   
       } // end for  
     } // end applyInterest
 
@@ -105,14 +105,21 @@ public class Bank implements HasMenu {
       System.out.print("User name: ");
       String userName = input.nextLine();
       System.out.print("PIN: ");
-      String PIN = inpput.nextLine();
+      String PIN = input.nextLine();       
 
       Customer currentCustomer = null;
       for (Customer customer: customers){
-        if (customer.login(userNameIn, PINin)){
+        if (customer.login(userName, PIN)){   
           currentCustomer = customer;  
         } // end if
       } // end for
+
+      if (currentCustomer == null){
+        System.out.println("Customer not found");
+      } else {
+        currentCustomer.start();  
+      } // end if
+    }  // end loginAsCustomer
     
     
     if (currentCustomer == null){
@@ -137,9 +144,9 @@ public class Bank implements HasMenu {
 
   public void loadCustomers(){
     try {
-      FileOutputStream fi = new FileInputStream("Customers.dat");
+      FileInputStream fi = new FileInputStream("Customers.dat");
       ObjectInputStream obIn = new ObjectInputStream(fi);
-      customers = (CustomersList)obIn.readObject();
+      customers = (CustomerList)obIn.readObject();
       obIn.close();
       fi.close();
     } catch (Exception e){

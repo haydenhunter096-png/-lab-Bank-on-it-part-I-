@@ -1,16 +1,16 @@
-// File: Admin.java
+
 import java.util.Scanner;
 import java.io.Serializable;
 
 public class Admin extends User implements HasMenu, Serializable {
 
-    // Constructor: default admin credentials
+   
     public Admin() {
-        userName = "admin";  // directly set for simplicity
+        userName = "admin";  
         PIN = "0000";
     }
 
-    // Display admin menu and get user choice
+    
     public String menu() {
         Scanner input = new Scanner(System.in);
 
@@ -24,11 +24,11 @@ public class Admin extends User implements HasMenu, Serializable {
         return input.nextLine();
     }
 
-    // Start is empty — handled in Bank
+    
     public void start() {
     }
 
-    // Simple report of admin info
+    
     public String getReport() {
         return "Admin userName: " + userName + ", Admin PIN: " + PIN;
     }

@@ -1,89 +1,7 @@
-// File: Customer.java
-import java.io.*;
-import java.util.*;
 
-public class Customer extends User implements Serializable {
-    static final long serialVersionUID = 1L;
-
-    private CheckingAccount checking = new CheckingAccount();
-    private SavingsAccount savings = new SavingsAccount();
-    private Scanner input = new Scanner(System.in);
-
-    public static void main(String[] args){
-        Customer c = new Customer();
-        if (c.login()){
-            c.start();
-        }
-    }
-
-    public void changePin(){
-        System.out.print("Enter new PIN: ");
-        String newPIN = input.nextLine();
-        this.setPIN(newPIN);
-        System.out.println("PIN changed.");
-    }
-
-    public Customer(){
-        this.setUserName("Alice");
-        this.setPIN("1111");
-    }
-
-    public Customer(String userName, String PIN){
-        this.setUserName(userName);
-        this.setPIN(PIN);
-    }
-
-    public String getReport(){
-        String report = "User: " + this.getUserName();
-        report += ", Checking: " + this.checking.getBalanceString();
-        report += ", Savings: " + this.savings.getBalanceString();
-        return report;
-    }
-
-    public void start(){
-        boolean keepGoing = true;
-        String result;
-        while (keepGoing){
-            result = menu();
-            switch(result){
-                case "0":
-                    keepGoing = false;
-                    break;
-                case "1":
-                    System.out.println("Checking account: ");
-                    this.checking.start();
-                    break;
-                case "2":
-                    System.out.println("Savings account: ");
-                    this.savings.start();
-                    break;
-                case "3":
-                    changePin();
-                    break;
-                default:
-                    System.out.println("You should enter 0, 1, 2, or 3");
-            }
-        }
-    }
-
-    public String menu(){
-        System.out.println();
-        System.out.println("Customer menu");
-        System.out.println();
-        System.out.println("0) Exit");
-        System.out.println("1) Manage Checking");
-        System.out.println("2) Manage Savings");
-        System.out.println("3) Change PIN");
-        System.out.println();
-        System.out.print("Your action: (0-3) ");
-        return input.nextLine();
-    }
-}
-
-// -------- User class --------
 class User implements Serializable {
-    private String userName;
-    private String pin;
+    protected String userName;
+    protected String PIN;
     private transient Scanner input = new Scanner(System.in);
 
     public boolean login(){
@@ -91,7 +9,11 @@ class User implements Serializable {
         String u = input.nextLine();
         System.out.print("Enter PIN: ");
         String p = input.nextLine();
-        return userName != null && pin != null && userName.equals(u) && pin.equals(p);
+        return userName != null && PIN != null && userName.equals(u) && PIN.equals(p);
+    }
+
+    public boolean login(String u, String p){
+        return userName != null && PIN != null && userName.equals(u) && PIN.equals(p);
     }
 
     public void setUserName(String userName){
@@ -99,7 +21,7 @@ class User implements Serializable {
     }
 
     public void setPIN(String pin){
-        this.pin = pin;
+        this.PIN = pin;
     }
 
     public String getUserName(){
@@ -107,9 +29,9 @@ class User implements Serializable {
     }
 }
 
-// -------- CheckingAccount --------
+
 class CheckingAccount {
-    private double balance = 1000.0;
+    private double balance = 0.0;
     private Scanner input = new Scanner(System.in);
 
     public void start(){
@@ -153,7 +75,7 @@ class CheckingAccount {
     }
 }
 
-// -------- SavingsAccount --------
+
 class SavingsAccount {
     private double balance = 5000.0;
     private Scanner input = new Scanner(System.in);
@@ -196,5 +118,12 @@ class SavingsAccount {
 
     public String getBalanceString(){
         return "$" + balance;
+    }
+
+
+    public void calcInterest(){
+        double interest = balance * 0.05;  
+        balance += interest;
+        System.out.println("Interest applied to savings: $" + interest);
     }
 }

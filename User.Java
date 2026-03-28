@@ -2,8 +2,8 @@ import java.util.*;
 import java.io.*;
 
 public abstract class User implements Serializable, HasMenu {
-    private String userName = "";
-    private String PIN = "";
+    protected String userName = "";
+    protected String PIN = "";
 
     public void setUserName(String userName) {
         this.userName = userName;
