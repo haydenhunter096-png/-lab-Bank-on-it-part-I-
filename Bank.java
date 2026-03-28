@@ -19,17 +19,18 @@ public class Bank implements HasMenu {
     } // end constructor
 
     public String menu(){
-        Scanner input = new Scanner(System.in);
-        System.out.println();
-        System.out.println("Bank Menu");
-        System.out.println();
-        System.out.println("0) Exit System");
-        System.out.println("1) Login as admin");
-        System.out.println("2) Login as customer");
-        System.out.println();
-        System.out.println("Action: ");
-        String response = input.nextLine();
-        return response;
+        try (Scanner input = new Scanner(System.in)) {
+            System.out.println();
+            System.out.println("Bank Menu");
+            System.out.println();
+            System.out.println("0) Exit System");
+            System.out.println("1) Login as admin");
+            System.out.println("2) Login as customer");
+            System.out.println();
+            System.out.println("Action: ");
+            String response = input.nextLine();
+            return response;
+        }
     } // end menu
 
     public void start(){
@@ -47,7 +48,7 @@ public class Bank implements HasMenu {
               System.out.println("Customer login"); 
               this.LoginAsCustomer(); 
             } else{
-              System.out.println("Please eneter 0, 1, or 2");  
+              System.out.println("Please enter 0, 1, or 2");  
             } // end if 
         } // end while
 
@@ -86,12 +87,13 @@ public class Bank implements HasMenu {
     } // end reportAllCustomers
 
     public void addUser(){
-      Scanner input = new Scanner(System.in);
-      System.out.print("User name: ");
-      String userName = input.nextLine();
-      System.out.print("PIN: ");
-      String PIN = input.nextLine();
-      customers.add(new Customer(userName, PIN));
+      try (Scanner input = new Scanner(System.in)) {
+        System.out.print("User name: ");
+        String userName = input.nextLine();
+        System.out.print("PIN: ");
+        String PIN = input.nextLine();
+        customers.add(new Customer(userName, PIN));
+      }
     } // end addUser
 
     public void applyInterest(){
@@ -100,35 +102,32 @@ public class Bank implements HasMenu {
       } // end for  
     } // end applyInterest
 
+
     public void LoginAsCustomer(){
-      Scanner input = new Scanner(System.in);
-      System.out.print("User name: ");
-      String userName = input.nextLine();
-      System.out.print("PIN: ");
-      String PIN = input.nextLine();       
+      try (Scanner input = new Scanner(System.in)) {
+        System.out.print("User name: ");
+        String userName = input.nextLine();
+        System.out.print("PIN: ");
+        String PIN = input.nextLine();
 
-      Customer currentCustomer = null;
-      for (Customer customer: customers){
-        if (customer.login(userName, PIN)){   
-          currentCustomer = customer;  
+        Customer currentCustomer = null;
+        for (Customer customer: customers){
+          if (((User) customer).login(userName, PIN)){
+            currentCustomer = customer;
+            break;
+          }
+        } // end for
+
+        if (currentCustomer == null){
+          System.out.println("Customer not found");
+        } else {
+          currentCustomer.start();
         } // end if
-      } // end for
+      }
+    }  // end LoginAsCustomer
 
-      if (currentCustomer == null){
-        System.out.println("Customer not found");
-      } else {
-        currentCustomer.start();  
-      } // end if
-    }  // end loginAsCustomer
     
     
-    if (currentCustomer == null){
-      System.out.println("Customer not found");
-    } else {
-      currentCustomer.start();  
-    } // end if
-  }  // end loginAsCustomer
-
   public void saveCustomers(){
     try {
       FileOutputStream fo = new FileOutputStream("Customers.dat");
@@ -156,4 +155,68 @@ public class Bank implements HasMenu {
 
 } // end Bank
 
-class CustomerList extends ArrayList<Customer> {}
+class Customer extends User {
+  private Account checking;
+  private Account savings;
+
+  public Customer(String userName, String pin) {
+    setUserName(userName);
+    setPIN(pin);
+    this.checking = new Account("Checking");
+    this.savings = new Account("Savings");
+  }
+
+  @Override
+  public boolean login(String userName, String pin) {
+    return super.login(userName, pin);
+  }
+
+  public Account getSavings() {
+    return savings;
+  }
+
+  public String menu() {
+    return "";
+  }
+
+  public void start() {
+    // Customer menu implementation
+  }
+
+  public String getReport() {
+    return "Customer: " + userName + "\nChecking: " + checking + "\nSavings: " + savings;
+  }
+}
+
+class Account implements Serializable {
+  private String accountType;
+  private double balance;
+
+  public Account(String accountType) {
+    this.accountType = accountType;
+    this.balance = 0.0;
+  }
+
+  public void calcInterest() {
+    // Apply interest calculation logic here
+    balance = balance * 1.02; // Example: 2% interest
+  }
+
+  public double getBalance() {
+    return balance;
+  }
+
+  public void deposit(double amount) {
+    balance += amount;
+  }
+
+  public void withdraw(double amount) {
+    balance -= amount;
+  }
+
+  @Override
+  public String toString() {
+    return accountType + ": $" + balance;
+  }
+}
+

@@ -25,8 +25,16 @@ public class CheckingAccount {
     public void deposit(){
         System.out.print("Amount to deposit: ");
         double amt = Double.parseDouble(input.nextLine());
+        deposit(amt);
+    }
+
+    public void deposit(double amt){
         balance += amt;
         System.out.println("New balance: " + getBalanceString());
+    }
+
+    public double getBalance(){
+        return balance;
     }
 
     public void withdraw(){
