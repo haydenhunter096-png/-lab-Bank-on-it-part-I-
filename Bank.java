@@ -3,6 +3,7 @@ import java.io.*;
 
 public class Bank implements HasMenu {
 
+    private static final Scanner input = new Scanner(System.in);
     Admin admin = new Admin();
     CustomerList customers = new CustomerList();
 
@@ -19,7 +20,6 @@ public class Bank implements HasMenu {
     } // end constructor
 
     public String menu(){
-        try (Scanner input = new Scanner(System.in)) {
             System.out.println();
             System.out.println("Bank Menu");
             System.out.println();
@@ -30,7 +30,6 @@ public class Bank implements HasMenu {
             System.out.println("Action: ");
             String response = input.nextLine();
             return response;
-        }
     } // end menu
 
     public void start(){
@@ -87,13 +86,11 @@ public class Bank implements HasMenu {
     } // end reportAllCustomers
 
     public void addUser(){
-      try (Scanner input = new Scanner(System.in)) {
         System.out.print("User name: ");
         String userName = input.nextLine();
         System.out.print("PIN: ");
         String PIN = input.nextLine();
         customers.add(new Customer(userName, PIN));
-      }
     } // end addUser
 
     public void applyInterest(){
@@ -104,7 +101,6 @@ public class Bank implements HasMenu {
 
 
     public void LoginAsCustomer(){
-      try (Scanner input = new Scanner(System.in)) {
         System.out.print("User name: ");
         String userName = input.nextLine();
         System.out.print("PIN: ");
@@ -112,7 +108,7 @@ public class Bank implements HasMenu {
 
         Customer currentCustomer = null;
         for (Customer customer: customers){
-          if (((User) customer).login(userName, PIN)){
+          if (customer.login(userName, PIN)){
             currentCustomer = customer;
             break;
           }
@@ -123,7 +119,6 @@ public class Bank implements HasMenu {
         } else {
           currentCustomer.start();
         } // end if
-      }
     }  // end LoginAsCustomer
 
     

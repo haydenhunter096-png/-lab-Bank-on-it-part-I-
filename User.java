@@ -31,24 +31,24 @@ public abstract class User implements Serializable, HasMenu {
         return userNameIn.equals(this.userName) && pinIn.equals(this.PIN);
     }
 
+    protected static final Scanner input = new Scanner(System.in);
+
     public boolean login() {
-        try (Scanner input = new Scanner(System.in)) {
-            System.out.print("User name: ");
-            String userNameIn = input.nextLine();
+        System.out.print("User name: ");
+        String userNameIn = input.nextLine();
 
-            System.out.print("PIN: ");
-            String pinIn = input.nextLine();
+        System.out.print("PIN: ");
+        String pinIn = input.nextLine();
 
-            boolean result = login(userNameIn, pinIn);
+        boolean result = login(userNameIn, pinIn);
 
-            if (result) {
-                System.out.println("Login successful");
-            } else {
-                System.out.println("Login failed");
-            }
-
-            return result;
+        if (result) {
+            System.out.println("Login successful");
+        } else {
+            System.out.println("Login failed");
         }
+
+        return result;
     }
 
     public abstract String getReport();
